@@ -13,9 +13,8 @@ class VisitorController extends Queries {
                         if (err) {
                             reject(err)
                         } else {
-                            console.log(params)
                             const sql = `INSERT INTO ${this.table} (${this.strColumns}) VALUES ("${params.nome}", "${params.rg}","${params.tipo}")`
-
+                            console.log(sql)
                             this.conn.query(sql, (err, result) => {
                                 if (err) {
                                     reject(err)
@@ -37,7 +36,7 @@ class VisitorController extends Queries {
             })
     }
 
-    getByRg(rg) {
+    getByRgAndType(rg, tipo) {
         return this.createConnectionSQL()
             .then(() => {
                 return new Promise((resolve, reject) => {
@@ -45,8 +44,8 @@ class VisitorController extends Queries {
                         if (err) {
                             reject(err)
                         } else {
-                            const sql = `SELECT * FROM ${this.table} WHERE rg = "${rg}"`
-
+                            const sql = `SELECT * FROM ${this.table} WHERE rg = "${rg}" and tipo = '${tipo}'`
+                            console.log(sql)
                             this.conn.query(sql, (err, result, fields) => {
                                 if (err) {
                                     reject(err)

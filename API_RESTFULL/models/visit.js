@@ -12,13 +12,13 @@ class Visit {
     }
 
     validateVisitParams() {
-        if (!this.parentesco) {
+        if (!this.nomRecuperando) {
             this.error.statusCode = 400
-            this.error.message = "Para visitantes é necessário preencher o parentesco"
+            this.error.message = "Para visitantes é necessário preencher o nome do recuperando que será visitado"
             return Promise.reject(this.error)
-        } else if (!this.nomRecuperando) {
+        } else if (!this.parentesco) {
             this.error.statusCode = 400
-            this.error.message = "Para visitantes é necessário preencher o nomRecuperando"
+            this.error.message = "Para visitantes é necessário preencher o parentesco que será visitado"
             return Promise.reject(this.error)
         } else if (typeof this.nomRecuperando !== 'string') {
             thsis.error.statusCode = 400

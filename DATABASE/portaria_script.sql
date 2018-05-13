@@ -9,9 +9,9 @@ CREATE TABLE IF NOT EXISTS `portaria_db`.`visitante` (
   `nome` VARCHAR(45) NOT NULL,
   `rg` VARCHAR(30) NOT NULL,
   `tipo` VARCHAR(20) NOT NULL,
-  PRIMARY KEY (`id_visitante`))
+  PRIMARY KEY (`id_visitante`),
+  UNIQUE INDEX `rg_tipo_UNIQUE` (`rg`, `tipo`))
 ENGINE = InnoDB;
-
 
 -- -----------------------------------------------------
 -- Table `portaria_db`.`visita`

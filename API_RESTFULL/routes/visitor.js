@@ -6,9 +6,9 @@ class RouteVisitor {
         this.visitorController = new VisitorController()
         this.app = app
 
-        this.app.route('/visitor/:rg')
+        this.app.route('/visitor/:rg/:tipo')
             .get((req, res) => {
-                return this.visitorController.getByRg(req.params.rg)
+                return this.visitorController.getByRgAndType(req.params.rg, req.params.tipo)
                     .then(response => {
                         res.status(200)
                         const resp = {
@@ -17,9 +17,6 @@ class RouteVisitor {
                             data: response
                         }
                         res.json(resp)
-                    })
-                    .catch((err) => {
-                        console.log(err)
                     })
             })
     }
