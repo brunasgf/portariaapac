@@ -1,0 +1,45 @@
+<div class="row" ng-controller="PortariaCtrl" ng-init="">
+    <div class="col-12">
+        <h1 class="main-title">Nova Visita</h1>
+    </div>
+    <div class="col-7 form-group">
+        <label>Tipo</label>
+        <select class="form-control" ng-model="visitante.tipo">
+            <option value="Fornecedor">Fornecedor</option>
+            <option value="Funcionario">Funcionario</option>
+            <option value="Visitante">Visitante</option>
+        </select>
+    </div>
+
+    <div class="col-4 form-group">
+        <label>RG</label>
+        <input type="text" class="form-control" ng-blur="" ng-model="visitante.rg" placeholder="Digite RG.Exemplo: MG17234899">
+    </div>
+
+    <div class="col-8 form-group">
+        <label>Nome</label>
+        <input class="form-control" ng-disabled="" ng-model="visitante.nome"></input>
+    </div>
+
+    <div class="col-8 form-group">
+        <label>Nome do Recuperando</label>
+        <input class="form-control" ng-disabled="" ng-model="visita.nomeRecuperando"></input>
+    </div>
+
+    <div class="col-8 form-group">
+        <label>Parentesco</label>
+        <input class="form-control" ng-disabled="" ng-model="visitante.parentesco"></input>
+    </div>
+
+    <div class="col-6"></div>
+
+    <div class="col-12 text-right">
+        <button class="btn btn-danger btn-round" ng-click="closeThisDialog(false)">
+            Cancelar
+        </button>
+
+        <button class="btn btn-success btn-round" ng-click="">
+            Adicionar
+        </button>
+    </div>
+</div>

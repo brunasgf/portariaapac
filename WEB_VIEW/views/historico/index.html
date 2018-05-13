@@ -1,0 +1,52 @@
+<div class="row" ng-controller="PortariaCtrl">
+    <div class="col-12">
+        <div class="row mb-4">
+            <div class="col-6">
+                <h3>Histórico</h3>
+            </div>
+           
+        </div>
+        <div class="row">
+            <div class="col-4 form-group">
+                <label>Busca:</label>
+                <input type="text" class="form-control" ng-model="busca" placeholder="Pesquise pela data">
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-hover table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="text-center wid-100">Tipo de Visitante</th>
+                            <th class="text-center wid-100">Nome</th>
+                            <th class="text-center wid-100">Identidade</th>
+                            <th class="text-center wid-100">Hora de Entrada</th>
+                            <th class="text-center wid-100">Hora de Saída</th>
+                            <th class="text-center wid-100">Parentesco</th>
+                            <th class="text-center wid-100">Nome do Recuperando</th>
+                            <th class="text-center wid-100">Registrar Sáida</th>
+                        </tr>
+                        <tbody>
+                            <tr >
+                                <td>Visitante</td>
+                                <td>Silvio Santos</td>
+                                <td class="text-center">MG12333983</td>
+                                <td class="text-center">12:18h</td>
+                                <td class="text-center">13:18h</td>
+                                <td class="text-center">Pai</td>
+                                <td class="text-center">Patrícia Pilar</td>
+                                <td class="text-center wid-100">
+                                    <button ng-disabled="emprestimo.data_devolucao" class="btn btn-warning buttn-sm btn-round" ng-click="">
+                                        <i class="fa fa-book"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            
+                        </tbody>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
