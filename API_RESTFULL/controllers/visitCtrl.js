@@ -106,6 +106,71 @@ class VisitController extends Queries {
                 return Promise.reject(err)
             })
     }
+
+    getFilterQuery(params) {
+        let query = []
+        let resp = ""
+        let keys = Object.keys(params)
+        if (keys.length) {
+            for (let i = 0; i < keys.length; i++) {
+                if (keys[i] === 'dataInicio' && params[keys[i]]) {
+                    query.push(`data_hora_entrada >= '${params[keys[i]]}'`)
+                } else if (keys[i] === 'dataFim' && params[keys[i]]) {
+                    query.push(`(data_hora_saida <= '${params[keys[i]]}' or data_hora_saida is null)`)
+                } else if (keys[i] === 'rg' && params[keys[i]]) {
+                    query.push(`rg LIKE '%${params[keys[i]]}%'`)
+                }
+            }
+
+            if (query.length) {
+                resp = `WHERE ${query.join(" AND ")} `
+            }
+        }
+        return resp
+    }
+
+    getAllFiltered(params) {
+        return this.createConnectionSQL()
+            .then(() => {
+                return new Promise((resolve, reject) => {
+                    this.conn.connect((err) => {
+                        if (err) {
+                            reject(err)
+                        } else {
+                            const sql = `SELECT
+                            id_visita 'id',
+                            DATE_FORMAT(data_hora_entrada, "%Y/%m/%d %H:%m") 'dataEntrada',
+                            DATE_FORMAT(data_hora_saida, "%Y/%m/%d %H:%m") 'dataSaida',
+                            recuperando_visitado 'nomeRecuperando',
+                            parentesco,
+                            visitante_id_visitante 'idVisitante',
+                            nome,
+                            rg,
+                            tipo
+                        FROM  visita as vis
+                        join visitante as visit on vis.visitante_id_visitante = visit.id_visitante
+                        ${this.getFilterQuery(params)}`
+                            console.log(sql)
+                            this.conn.query(sql, (err, result, fields) => {
+                                if (err) {
+                                    reject(err)
+                                } else {
+                                    resolve(result)
+                                }
+                            })
+                        }
+                    })
+                })
+            })
+            .then((res) => {
+                this.conn.end()
+                return Promise.resolve(res)
+            })
+            .catch((err) => {
+                this.conn.end()
+                return Promise.reject(err)
+            })
+    }
 }
 
 module.exports = VisitController
