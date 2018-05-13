@@ -113,7 +113,7 @@ class VisitController extends Queries {
                 if (keys[i] === 'dataInicio' && params[keys[i]]) {
                     query.push(`data_hora_entrada >= '${params[keys[i]]}'`)
                 } else if (keys[i] === 'dataFim' && params[keys[i]]) {
-                    query.push(`(data_hora_saida <= '${params[keys[i]]}' or data_hora_saida is null)`)
+                    query.push(`data_hora_entrada <= '${params[keys[i]]}'`)
                 } else if (keys[i] === 'rg' && params[keys[i]]) {
                     query.push(`rg LIKE '%${params[keys[i]]}%'`)
                 }
@@ -137,8 +137,8 @@ class VisitController extends Queries {
                             const sql = `
                             SELECT
                                 id_visita 'id',
-                                DATE_FORMAT(data_hora_entrada, "%Y/%m/%d %H:%m") 'dataEntrada',
-                                DATE_FORMAT(data_hora_saida, "%Y/%m/%d %H:%m") 'dataSaida',
+                                DATE_FORMAT(data_hora_entrada, "%d/%m/%Y %H:%m") 'dataEntrada',
+                                DATE_FORMAT(data_hora_saida, "%d/%m/%Y %H:%m") 'dataSaida',
                                 recuperando_visitado 'nomeRecuperando',
                                 parentesco,
                                 visitante_id_visitante 'idVisitante',
