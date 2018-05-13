@@ -4,21 +4,27 @@ EmprestimoCtrl.controller('PortariaCtrl', ['$scope', 'Portaria', 'Notify', 'toas
     ($scope, Portaria, Notify, toastr) => {
 
         $scope.visita = {
-            idVisita: null,
+            id: null,
             nomeRecuperando: null,
             parentesco: null,
             idVisitante: null,
-            horaEntrada: null,
-            horaSaida: null
+            dataEntrada: null,
+            dataSaida: null,
+            rg: null,
+            tipo: null,
+            nome: null,
         }
 
         $scope.filter = {
-            idVisita: null,
+            id: null,
             nomeRecuperando: null,
             parentesco: null,
             idVisitante: null,
-            horaEntrada: null,
-            horaSaida: null
+            dataEntrada: null,
+            dataSaida: null,
+            rg: null,
+            tipo: null,
+            nome: null,
         }
 
         $scope.visitante = {
