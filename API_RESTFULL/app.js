@@ -1,6 +1,7 @@
 const bodyParser = require('body-parser')
 const express = require('express')
 const VisitorRoute = require('./routes/visitor')
+const VisitRoute = require('./routes/visit')
 const Config = require('./config/config')
 
 class App {
@@ -23,6 +24,7 @@ class App {
 
         this.app.use(bodyParser.json())
         this.visitorRoute = new VisitorRoute(this.app)
+        this.visitRoute = new VisitRoute(this.app)
     }
 }
 

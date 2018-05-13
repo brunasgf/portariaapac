@@ -36,11 +36,11 @@ class Visitor {
             this.error.statusCode = 400
             this.error.message = "Há algo incorreto no tipo do campo tipo"
             return Promise.reject(this.error)
-        } else if (this.tipo !== 'funcionario' ||
-            this.tipo !== 'fornecedor' ||
+        } else if (this.tipo !== 'funcionario' &&
+            this.tipo !== 'fornecedor' &&
             this.tipo !== 'visitante') {
             this.error.statusCode = 400
-            this.error.message = "O campo tipo só pode ter valor funcionario, fornecedor ou visistante"
+            this.error.message = "O campo tipo só pode ter valor funcionario, fornecedor ou visitante"
             return Promise.reject(this.error)
         } else {
             return Promise.resolve(this)

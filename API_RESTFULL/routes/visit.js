@@ -8,18 +8,7 @@ class RouteVisit {
 
         this.app.route('/visit')
             .post((req, res) => {
-                const visit = new Visit(req.body.parentesco, req.body.nomRecuperando, req.body.idUsuario)
-                return visit.validateParams()
-                    .then((res) => {
-                        if (req.body.idVisitante) {
-
-                        } else {
-
-                        }
-                    })
-                    .then(() => {
-                        return this.visitController.create(req.body)
-                    })
+                return this.visitController.create(req.body)
                     .then(response => {
                         res.status(200)
                         const resp = {
@@ -31,9 +20,16 @@ class RouteVisit {
                     })
                     .catch((err) => {
                         console.log(err)
+                        res.status(err.statusCode)
+                        const resp = {
+                            sucess: false,
+                            message: err.message,
+                            data: null
+                        }
+                        res.json(resp)
                     })
             })
     }
 }
 
-module.exports = RouteVisit	
+module.exports = RouteVisit
