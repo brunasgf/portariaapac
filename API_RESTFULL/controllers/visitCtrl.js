@@ -75,6 +75,37 @@ class VisitController extends Queries {
                 return Promise.reject(err)
             })
     }
+
+    setExiting(idVisit) {
+        return this.createConnectionSQL()
+            .then(() => {
+                return new Promise((resolve, reject) => {
+                    this.conn.connect((err) => {
+                        if (err) {
+                            reject(err)
+                        } else {
+                            const sql = `UPDATE ${this.table} SET data_hora_saida = '${Moment().format("YYYY-MM-DD HH:mm:ss")}' WHERE id_visita = ${idVisit}`
+
+                            this.conn.query(sql, (err, result) => {
+                                if (err) {
+                                    reject(err)
+                                } else {
+                                    resolve(result)
+                                }
+                            })
+                        }
+                    })
+                })
+            })
+            .then((res) => {
+                this.conn.end()
+                return Promise.resolve(res)
+            })
+            .catch((err) => {
+                this.conn.end()
+                return Promise.reject(err)
+            })
+    }
 }
 
 module.exports = VisitController
