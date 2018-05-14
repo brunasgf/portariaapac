@@ -1,4 +1,4 @@
-<div class="row" ng-controller="PortariaCtrl" ng-init="getTodasVisitas()">
+<div class="row" ng-controller="PortariaCtrl" ng-init="getHistoricoVisitas()">
     <div class="col-12">
         <div class="row mb-4">
             <div class="col-6">
@@ -36,6 +36,9 @@
                                 <td class="text-center">{{visita.dataSaida}}</td>
                                 <td class="text-center">{{visita.parentesco}}</td>
                                 <td class="text-center">{{visita.nomeRecuperando}}</td>
+                            </tr>
+                            <tr ng-if="!listaVisitas.length">
+                                <td colspan="8">Nenhum registro de visita foi encontrado</td>
                             </tr>
 
                         </tbody>

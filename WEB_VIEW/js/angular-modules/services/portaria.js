@@ -27,6 +27,10 @@ emprestimoSrv.service("Portaria", ['$http',
             return $http.post(`http://localhost:8001/borrow`, request)
         }
 
-        
+        this.registrarSaida = (id) => {
+            return $http.get(`http://localhost:8002/visit/setExiting/${id}`)
+        }
+
+
     }
 ])

@@ -41,10 +41,13 @@
                                 <td class="text-center">{{visita.parentesco}}</td>
                                 <td class="text-center">{{visita.nomeRecuperando}}</td>
                                 <td class="text-center wid-100">
-                                    <button class="btn btn-warning buttn-sm btn-round" ng-click="">
+                                    <button class="btn btn-warning buttn-sm btn-round" ng-click="registrarSaida(visita.id)">
                                         <i class="fa fa-book"></i>
                                     </button>
                                 </td>
+                            </tr>
+                            <tr ng-if="!listaVisitas.length">
+                                <td colspan="8">Não há nenhuma vista em aberto no momento</td>
                             </tr>
                             
                         </tbody>

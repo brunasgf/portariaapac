@@ -64,8 +64,36 @@ EmprestimoCtrl.controller('PortariaCtrl', ['$scope', 'Portaria', 'Notify', 'toas
         const getTodasVisitas = () => {
             return Portaria.getAll($scope.filter)
                 .then((res) => {
+                    var aux = [];
+                    for (var i = 0; i < res.data.data.length; i++) {
+                        if (res.data.data[i].dataSaida == null) {
+                           aux.push(res.data.data[i]);
+                        }
+                    }
+                    $scope.listaVisitas = aux;
+                    console.log(res);
+                })
+                .catch((err) => {
+                    toastr.error("Algo de errado aconteceu", "Você pode ter problemas em vizualizar as visitas :(")
+                })
+        }
+
+        const getHistoricoVisitas = () => {
+            return Portaria.getAll($scope.filter)
+                .then((res) => {
                     $scope.listaVisitas = res.data.data;
                     console.log(res);
+                })
+                .catch((err) => {
+                    toastr.error("Algo de errado aconteceu", "Você pode ter problemas em vizualizar as visitas :(")
+                })
+        }
+
+        const registrarSaida = (id) => {
+            return Portaria.registrarSaida(id)
+                .then((res) => {
+                    console.log(res);
+                    getTodasVisitas();
                 })
                 .catch((err) => {
                     toastr.error("Algo de errado aconteceu", "Você pode ter problemas em vizualizar as visitas :(")
@@ -86,6 +114,8 @@ EmprestimoCtrl.controller('PortariaCtrl', ['$scope', 'Portaria', 'Notify', 'toas
         $scope.adicionarVisita = adicionarVisita
         $scope.getFormatedData = getFormatedData
         $scope.getTodasVisitas = getTodasVisitas
+        $scope.registrarSaida = registrarSaida
+        $scope.getHistoricoVisitas = getHistoricoVisitas
 
 
     }
