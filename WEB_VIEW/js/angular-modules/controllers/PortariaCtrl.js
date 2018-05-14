@@ -1,6 +1,6 @@
-const EmprestimoCtrl = angular.module('apacteca')
+const visitaCtrl = angular.module('apacteca')
 
-EmprestimoCtrl.controller('PortariaCtrl', ['$scope', 'Portaria', 'Notify', 'toastr',
+visitaCtrl.controller('PortariaCtrl', ['$scope', 'Portaria', 'Notify', 'toastr',
     ($scope, Portaria, Notify, toastr) => {
 
         $scope.visita = {
@@ -34,6 +34,9 @@ EmprestimoCtrl.controller('PortariaCtrl', ['$scope', 'Portaria', 'Notify', 'toas
             tipo: null
         }
 
+        $scope.hasSearched = false
+        $scope.hasvalue = false
+
         $scope.listaVisitas = [];
         $scope.isDisabled = true;
         $scope.listaObra = [];
@@ -49,8 +52,8 @@ EmprestimoCtrl.controller('PortariaCtrl', ['$scope', 'Portaria', 'Notify', 'toas
                 })
         }
 
-        const adicionarVisita = (emprestimo) => {
-            return Emprestimo.create(emprestimo)
+        const adicionarVisita = (visita) => {
+            return Portaria.create(visita)
                 .then((res) => {
                     toastr.success(res.data.message, "Tudo Certo")
                     $scope.closeThisDialog()
@@ -60,6 +63,25 @@ EmprestimoCtrl.controller('PortariaCtrl', ['$scope', 'Portaria', 'Notify', 'toas
                 })
         }
 
+        const buscarVisitante = (visitante) => {
+            $scope.visitante.nome = null
+            $scope.hasSearched = false
+            $scope.hasvalue = false
+            return Portaria.getVisitantePorRgETipo(visitante)
+                .then((res) => {
+                    $scope.hasSearched = true
+                    console.log(res)
+                    if (res && res.data && res.data.data.length) {
+                        $scope.visitante.nome = res.data.data[0].nome
+                        $scope.hasvalue = false
+                    } else {
+                        $scope.hasvalue = true
+                    }
+                })
+                .catch((err) => {
+                    toastr.error(err.data.message, "Ops Algo de errado Aconteceu")
+                })
+        }
 
         const getTodasVisitas = () => {
             return Portaria.getAll($scope.filter)
@@ -112,6 +134,7 @@ EmprestimoCtrl.controller('PortariaCtrl', ['$scope', 'Portaria', 'Notify', 'toas
 
         $scope.OpenModalNovaVisita = OpenModalNovaVisita
         $scope.adicionarVisita = adicionarVisita
+        $scope.buscarVisitante = buscarVisitante
         $scope.getFormatedData = getFormatedData
         $scope.getTodasVisitas = getTodasVisitas
         $scope.registrarSaida = registrarSaida

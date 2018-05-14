@@ -16,15 +16,18 @@ emprestimoSrv.service("Portaria", ['$http',
 
         this.create = (emprestimo) => {
             const request = {
-                idVisita: filter.idVisita,
-                nomeRecuperando: filter.nomeRecuperando,
-                parentesco: filter.parentesco,
-                idVisitante: filter.idVisita,
-                horaEntrada: filter.HoraEntrada
-
+                rg: emprestimo.rg,
+                nome: emprestimo.nome,
+                tipo: emprestimo.tipo,
+                nomeRecuperando: emprestimo.nomeRecuperando,
+                parentesco: emprestimo.parentesco
             }
 
-            return $http.post(`http://localhost:8001/borrow`, request)
+            return $http.post(`http://localhost:8002/visit`, request)
+        }
+
+        this.getVisitantePorRgETipo = (emprestimo) => {
+            return $http.get(`http://localhost:8002/visitor/${emprestimo.rg}/${emprestimo.tipo}`)
         }
 
         this.registrarSaida = (id) => {

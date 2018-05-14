@@ -42,6 +42,7 @@ class RouteVisit {
                         res.json(resp)
                     })
                     .catch((err) => {
+                        console.log(err)
                         res.status(err.statusCode)
                         const resp = {
                             sucess: false,

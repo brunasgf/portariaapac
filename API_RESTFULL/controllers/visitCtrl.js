@@ -23,7 +23,7 @@ class VisitController extends Queries {
                     return visitor.validateParams()
                         .then((visitor) => {
                             if (visitor.tipo === "visitante") {
-                                const visit = new Visit(params.parentesco, params.nomRecuperando)
+                                const visit = new Visit(params.parentesco, params.nomeRecuperando)
                                 return visit.validateVisitParams()
                             } else {
                                 Promise.resolve()
@@ -48,7 +48,7 @@ class VisitController extends Queries {
                         } else {
                             const sql = `INSERT INTO ${this.table} (${this.strColumns}) 
                                             VALUES ('${Moment().format("YYYY-MM-DD HH:MM:ss")}',
-                                                    ${(params.tipo === "visitante") ? '"' + params.nomRecuperando + '"' : 'null'}, 
+                                                    ${(params.tipo === "visitante") ? '"' + params.nomeRecuperando + '"' : 'null'}, 
                                                     ${(params.tipo === "visitante") ? '"' + params.parentesco + '"' : 'null'},
                                                     ${idVisitante}) `
                             console.log(sql)
