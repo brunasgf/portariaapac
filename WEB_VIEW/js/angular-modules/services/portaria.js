@@ -3,14 +3,13 @@ const emprestimoSrv = angular.module("apacteca")
 emprestimoSrv.service("Portaria", ['$http',
     function ($http) {
 
-        this.getAll = (filter) => {
+        this.getAll = (rg, dataInicio, dataFim) => {
             const request = {
-                idVisita: filter.idVisita,
-                nomeRecuperando: filter.nomeRecuperando,
-                parentesco: filter.parentesco,
-                idVisitante: filter.idVisita,
-                horaEntrada: filter.HoraEntrada
+                rg: rg,
+                dataInicio: dataInicio,
+                dataFim: dataFim
             }
+
             return $http.post(`http://localhost:8002/visit/getAll`, request)
         }
 

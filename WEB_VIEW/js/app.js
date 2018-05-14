@@ -2,7 +2,8 @@ const app = angular.module('apacteca', [
     'ngRoute',
     'ngDialog',
     'ngAnimate',
-    'toastr'
+    'toastr',
+    'angularMoment'
 ])
 
 app.filter('startFrom', function () {

@@ -1,8 +1,7 @@
 const visitaCtrl = angular.module('apacteca')
 
-visitaCtrl.controller('PortariaCtrl', ['$scope', 'Portaria', 'Notify', 'toastr',
-    ($scope, Portaria, Notify, toastr) => {
-
+visitaCtrl.controller('PortariaCtrl', ['$scope', 'Portaria', 'Notify', 'toastr', 'moment',
+    ($scope, Portaria, Notify, toastr, Moment) => {
         $scope.visita = {
             id: null,
             nomeRecuperando: null,
@@ -16,15 +15,9 @@ visitaCtrl.controller('PortariaCtrl', ['$scope', 'Portaria', 'Notify', 'toastr',
         }
 
         $scope.filter = {
-            id: null,
-            nomeRecuperando: null,
-            parentesco: null,
-            idVisitante: null,
-            dataEntrada: null,
-            dataSaida: null,
-            rg: null,
-            tipo: null,
-            nome: null,
+            dataInicio: new Date(),
+            dataFim: new Date(),
+            rg: null
         }
 
         $scope.visitante = {
@@ -57,6 +50,10 @@ visitaCtrl.controller('PortariaCtrl', ['$scope', 'Portaria', 'Notify', 'toastr',
                 .then((res) => {
                     toastr.success(res.data.message, "Tudo Certo")
                     $scope.closeThisDialog()
+                    return true
+                })
+                .then(() => {
+                    return $scope.getTodasVisitas($scope.filter)
                 })
                 .catch((err) => {
                     toastr.error(err.data.message, "Ops Algo de errado Aconteceu")
@@ -83,13 +80,13 @@ visitaCtrl.controller('PortariaCtrl', ['$scope', 'Portaria', 'Notify', 'toastr',
                 })
         }
 
-        const getTodasVisitas = () => {
-            return Portaria.getAll($scope.filter)
+        const getTodasVisitas = (filter) => {
+            return Portaria.getAll(filter.rg, Moment(filter.dataInicio).format("YYYY-MM-DD"), Moment(filter.dataFim).add(1, 'days').format("YYYY-MM-DD"))
                 .then((res) => {
                     var aux = [];
                     for (var i = 0; i < res.data.data.length; i++) {
                         if (res.data.data[i].dataSaida == null) {
-                           aux.push(res.data.data[i]);
+                            aux.push(res.data.data[i]);
                         }
                     }
                     $scope.listaVisitas = aux;
@@ -101,7 +98,7 @@ visitaCtrl.controller('PortariaCtrl', ['$scope', 'Portaria', 'Notify', 'toastr',
         }
 
         const getHistoricoVisitas = () => {
-            return Portaria.getAll($scope.filter)
+            return Portaria.getAll($scope.filter.rg, Moment($scope.filter.dataInicio).format("YYYY-MM-DD"), Moment($scope.filter.dataFim).add(1, 'days').format("YYYY-MM-DD"))
                 .then((res) => {
                     $scope.listaVisitas = res.data.data;
                     console.log(res);
@@ -115,7 +112,7 @@ visitaCtrl.controller('PortariaCtrl', ['$scope', 'Portaria', 'Notify', 'toastr',
             return Portaria.registrarSaida(id)
                 .then((res) => {
                     console.log(res);
-                    getTodasVisitas();
+                    getTodasVisitas($scope.filter);
                 })
                 .catch((err) => {
                     toastr.error("Algo de errado aconteceu", "Você pode ter problemas em vizualizar as visitas :(")
