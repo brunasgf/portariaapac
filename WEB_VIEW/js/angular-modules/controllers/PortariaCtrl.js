@@ -38,10 +38,10 @@ visitaCtrl.controller('PortariaCtrl', ['$scope', 'Portaria', 'Notify', 'toastr',
             return Notify.openModalTemplate("./views/portaria/criar.html")
                 .closePromise
                 .then(() => {
-                    getTodasVisitas()
+                    getTodasVisitas($scope.filter)
                 })
                 .catch(() => {
-                    getTodasVisitas()
+                    getTodasVisitas($scope.filter)
                 })
         }
 
@@ -51,9 +51,6 @@ visitaCtrl.controller('PortariaCtrl', ['$scope', 'Portaria', 'Notify', 'toastr',
                     toastr.success(res.data.message, "Tudo Certo")
                     $scope.closeThisDialog()
                     return true
-                })
-                .then(() => {
-                    return $scope.getTodasVisitas($scope.filter)
                 })
                 .catch((err) => {
                     toastr.error(err.data.message, "Ops Algo de errado Aconteceu")
@@ -67,7 +64,6 @@ visitaCtrl.controller('PortariaCtrl', ['$scope', 'Portaria', 'Notify', 'toastr',
             return Portaria.getVisitantePorRgETipo(visitante)
                 .then((res) => {
                     $scope.hasSearched = true
-                    console.log(res)
                     if (res && res.data && res.data.data.length) {
                         $scope.visitante.nome = res.data.data[0].nome
                         $scope.hasvalue = false
@@ -90,7 +86,6 @@ visitaCtrl.controller('PortariaCtrl', ['$scope', 'Portaria', 'Notify', 'toastr',
                         }
                     }
                     $scope.listaVisitas = aux;
-                    console.log(res);
                 })
                 .catch((err) => {
                     toastr.error("Algo de errado aconteceu", "Você pode ter problemas em vizualizar as visitas :(")
@@ -101,7 +96,6 @@ visitaCtrl.controller('PortariaCtrl', ['$scope', 'Portaria', 'Notify', 'toastr',
             return Portaria.getAll($scope.filter.rg, Moment($scope.filter.dataInicio).format("YYYY-MM-DD"), Moment($scope.filter.dataFim).add(1, 'days').format("YYYY-MM-DD"))
                 .then((res) => {
                     $scope.listaVisitas = res.data.data;
-                    console.log(res);
                 })
                 .catch((err) => {
                     toastr.error("Algo de errado aconteceu", "Você pode ter problemas em vizualizar as visitas :(")
@@ -111,8 +105,9 @@ visitaCtrl.controller('PortariaCtrl', ['$scope', 'Portaria', 'Notify', 'toastr',
         const registrarSaida = (id) => {
             return Portaria.registrarSaida(id)
                 .then((res) => {
-                    console.log(res);
-                    getTodasVisitas($scope.filter);
+                    setTimeout(() => {
+                        getTodasVisitas($scope.filter)
+                    }, 2000);
                 })
                 .catch((err) => {
                     toastr.error("Algo de errado aconteceu", "Você pode ter problemas em vizualizar as visitas :(")

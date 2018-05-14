@@ -38,7 +38,6 @@
                             <th class="text-center wid-100">Nome</th>
                             <th class="text-center wid-100">Identidade</th>
                             <th class="text-center wid-100">Hora de Entrada</th>
-                            <th class="text-center wid-100">Hora de Saída</th>
                             <th class="text-center wid-100">Parentesco</th>
                             <th class="text-center wid-100">Nome do Recuperando</th>
                             <th class="text-center wid-100">Registrar Sáida</th>
@@ -49,12 +48,11 @@
                                 <td>{{visita.nome}}</td>
                                 <td class="text-center">{{visita.rg}}</td>
                                 <td class="text-center">{{visita.dataEntrada}}</td>
-                                <td class="text-center">{{visita.dataSaida}}</td>
-                                <td class="text-center">{{visita.parentesco}}</td>
-                                <td class="text-center">{{visita.nomeRecuperando}}</td>
+                                <td class="text-center">{{(visita.parentesco) ? visita.parentesco: '---'}}</td>
+                                <td class="text-center">{{(visita.nomeRecuperando) ? visita.nomeRecuperando: '---'}}</td>
                                 <td class="text-center wid-100">
                                     <button class="btn btn-warning buttn-sm btn-round" ng-click="registrarSaida(visita.id)">
-                                        <i class="fa fa-book"></i>
+                                        <i class="fa fa-hand-o-left"></i>
                                     </button>
                                 </td>
                             </tr>

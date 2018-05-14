@@ -7,11 +7,23 @@
 
         </div>
         <div class="row">
-            <div class="col-4 form-group">
-                <label>Busca:</label>
-                <input type="date" class="form-control" ng-model="busca" >
+            <div class="col-3 form-group">
+                <label>Data Inicio</label>
+                <input type="date" class="form-control" ng-model="filter.dataInicio">
             </div>
-
+            <div class="col-3 form-group">
+                <label>Data Fim</label>
+                <input type="date" class="form-control" ng-model="filter.dataFim">
+            </div>
+            <div class="col-3 form-group">
+                <label>RG</label>
+                <input type="text" class="form-control" ng-model="filter.rg" placeholder="Digite RG.Exemplo: MG17234899">
+            </div>
+            <div class="col-3 form-group">
+                <button class="btn btn-success btn-block hasLabel" ng-click="getTodasVisitas(filter)">
+                    Pesquisar
+                </button>
+            </div>
         </div>
         <div class="row">
             <div class="col-12">
@@ -25,7 +37,7 @@
                             <th class="text-center wid-100">Hora de Saída</th>
                             <th class="text-center wid-100">Parentesco</th>
                             <th class="text-center wid-100">Nome do Recuperando</th>
-                            
+
                         </tr>
                         <tbody>
                             <tr ng-repeat="visita in listaVisitas | filter:busca">
@@ -33,7 +45,7 @@
                                 <td>{{visita.nome}}</td>
                                 <td class="text-center">{{visita.rg}}</td>
                                 <td class="text-center">{{visita.dataEntrada}}</td>
-                                <td class="text-center">{{visita.dataSaida}}</td>
+                                <td class="text-center">{{(visita.dataSaida) ? visita.dataSaida : 'Não Saiu'}}</td>
                                 <td class="text-center">{{visita.parentesco}}</td>
                                 <td class="text-center">{{visita.nomeRecuperando}}</td>
                             </tr>
